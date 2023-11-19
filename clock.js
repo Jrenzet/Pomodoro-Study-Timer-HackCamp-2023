@@ -1,6 +1,7 @@
+let initialTime = 10
 let state = 0;
 let timerId = null;
-let timeLeft = 3; // Initialize timeLeft outside the Timer function
+let timeLeft = initialTime; // Initialize timeLeft outside the Timer function
 
 document.getElementById('startButton').addEventListener('click', function() {
     if (state === 0) {
@@ -20,7 +21,13 @@ document.getElementById('resetButton').addEventListener('click', function() {
     timerId = null;
     alert("reset!");
     state = 0; // Reset state when countdown finishes
-    timeLeft = 3; // Reset the timer for next start
+    timeLeft = initialTime; // Reset the timer for next start
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    // Format the time string
+    timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+
 });
 
 function Timer() {
@@ -40,7 +47,7 @@ function Timer() {
             timerId = null;
             alert("Time's up!");
             state = 0; // Reset state when countdown finishes
-            timeLeft = 3; // Reset the timer for next start
+            timeLeft = initialTime; // Reset the timer for next start
         }
-    }, 1000);
+    }, 1000); 
 }
