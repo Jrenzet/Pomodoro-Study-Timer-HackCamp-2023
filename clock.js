@@ -42,5 +42,5 @@ function Timer() {
             state = 0; // Reset state when countdown finishes
             timeLeft = 3; // Reset the timer for next start
         }
-    }, 1000);
+    }, 1000); //comment
 }
