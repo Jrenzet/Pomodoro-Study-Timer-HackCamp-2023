@@ -28,7 +28,8 @@ function Timer() {
             timeLeft--;
             updateTimerDisplay();
             if (timeLeft == 300) {
-                showMessage();}
+                showMessage();
+            }
         } else {
             timerFinished();
         }
@@ -46,7 +47,7 @@ function resetTimer() {
     timeLeft = initialTime;
     updateTimerDisplay();
     state = 0; // Reset the state
-    alert("Timer reset!");
+    hideMessage();
 }
 
 function timerFinished() {
@@ -70,4 +71,8 @@ function showMessage() {
     messageBox.style.display = 'block';
 }
 
+function hideMessage() {
+    var messageBox = document.getElementById('messageBox');
+    messageBox.style.display = 'none';
+}
 
