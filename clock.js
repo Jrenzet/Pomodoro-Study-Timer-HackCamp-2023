@@ -17,4 +17,3 @@ document.getElementById('startButton').addEventListener('click', function() {
         timeLeft--;
     }, 1000);
 });
-//comment
