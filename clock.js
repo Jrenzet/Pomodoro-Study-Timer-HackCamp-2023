@@ -1,5 +1,17 @@
-document.getElementById('startButton').addEventListener('click', function() {
-    var timeLeft = 60; // Duration of the countdown in seconds
+var state = 0;
+document.getElementById('startButton').addEventListener('click', 
+ function state_control(){
+    // x = 0 , 1 on click, by default 0
+    if (state === 0){
+        state = 1;
+    } else
+    {state = 0 ;}
+})
+
+Timer (state)
+
+function Timer(state) {
+    var timeLeft = 3; // Duration of the countdown in seconds
     var timerDisplay = document.getElementById('timerDisplay');
 
     var timerId = setInterval(function() {
@@ -13,7 +25,9 @@ document.getElementById('startButton').addEventListener('click', function() {
             clearInterval(timerId);
             alert("Time's up!");
         }
-
-        timeLeft--;
+        if(state === 1){
+            timeLeft--;
+        }
+        
     }, 1000);
-});
+};
