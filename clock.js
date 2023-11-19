@@ -1,7 +1,8 @@
-let initialTime = 10;
+let initialTime = 305;
 let state = 0;
 let timerId = null;
 let timeLeft = initialTime; // Set initial time left
+updateTimerDisplay()
 
 document.getElementById('startButton').addEventListener('click', function() {
     if (state === 0) {
@@ -26,6 +27,8 @@ function Timer() {
         if (timeLeft > 0) {
             timeLeft--;
             updateTimerDisplay();
+            if (timeLeft == 300) {
+                showMessage();}
         } else {
             timerFinished();
         }
@@ -61,3 +64,10 @@ function updateTimerDisplay() {
     let timerDisplay = document.getElementById('timerDisplay');
     timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
 }
+
+function showMessage() {
+    var messageBox = document.getElementById('messageBox');
+    messageBox.style.display = 'block';
+}
+
+
