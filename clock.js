@@ -1,7 +1,7 @@
-let initialTime = 10
+let initialTime = 10;
 let state = 0;
 let timerId = null;
-let timeLeft = initialTime; // Initialize timeLeft outside the Timer function
+let timeLeft = initialTime; // Set initial time left
 
 document.getElementById('startButton').addEventListener('click', function() {
     if (state === 0) {
@@ -10,24 +10,13 @@ document.getElementById('startButton').addEventListener('click', function() {
         }
         state = 1;
     } else {
-        clearInterval(timerId); // Pause the timer
-        timerId = null;
+        pauseTimer(); // Pause the timer
         state = 0;
     }
 });
 
 document.getElementById('resetButton').addEventListener('click', function() {
-    clearInterval(timerId);
-    timerId = null;
-    alert("reset!");
-    state = 0; // Reset state when countdown finishes
-    timeLeft = initialTime; // Reset the timer for next start
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-
-    // Format the time string
-    timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-
+    resetTimer(); // Reset the timer
 });
 
 function Timer() {
@@ -35,19 +24,40 @@ function Timer() {
 
     timerId = setInterval(function() {
         if (timeLeft > 0) {
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-
-            // Format the time string
-            timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-
             timeLeft--;
+            updateTimerDisplay();
         } else {
-            clearInterval(timerId);
-            timerId = null;
-            alert("Time's up!");
-            state = 0; // Reset state when countdown finishes
-            timeLeft = initialTime; // Reset the timer for next start
+            timerFinished();
         }
-    }, 1000); 
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(timerId);
+    timerId = null;
+}
+
+function resetTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    timeLeft = initialTime;
+    updateTimerDisplay();
+    state = 0; // Reset the state
+    alert("Timer reset!");
+}
+
+function timerFinished() {
+    clearInterval(timerId);
+    timerId = null;
+    alert("Time's up!");
+    state = 0;
+    timeLeft = initialTime;
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    let timerDisplay = document.getElementById('timerDisplay');
+    timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
 }
