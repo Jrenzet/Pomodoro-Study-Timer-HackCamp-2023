@@ -2,6 +2,7 @@ let initialTime = 305;
 let state = 0;
 let timerId = null;
 let timeLeft = initialTime; // Set initial time left
+let blockPages = false; // should the pages be blocked? begins as "false" or not blocked
 updateTimerDisplay()
 
 document.getElementById('startButton').addEventListener('click', function() {
@@ -26,9 +27,14 @@ function Timer() {
     timerId = setInterval(function() {
         if (timeLeft > 0) {
             timeLeft--;
+            console.log(blockPages);
             updateTimerDisplay();
+            if (timeLeft > 300){
+                blockPages = true;
+            }
             if (timeLeft == 300) {
                 showMessage();
+                blockPages = false;
             }
         } else {
             timerFinished();
@@ -75,4 +81,3 @@ function hideMessage() {
     var messageBox = document.getElementById('messageBox');
     messageBox.style.display = 'none';
 }
-
