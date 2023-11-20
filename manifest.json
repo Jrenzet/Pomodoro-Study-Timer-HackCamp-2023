@@ -1,10 +1,18 @@
 {
     "manifest_version": 3,
     "name": "Pomodoro",
-    "description": "Blocks distracting websites during 25 min focus time",
+    "description": "Blocks distracting websites during 25 min focus time accordingto the Pomodoro technique",
     "version": "1.0",
+    "content_scripts": [
+      {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
     "action": {
       "default_popup": "popup.html",
       "default_icon": "pomodoro.png"
     }
+   
+    
   }
