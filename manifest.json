@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Pomodoro",
-    "description": "Base Level Extension",
+    "description": "Blocks distracting websites during 25 min focus time",
     "version": "1.0",
     "action": {
       "default_popup": "popup.html",
