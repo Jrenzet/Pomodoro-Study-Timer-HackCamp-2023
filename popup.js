@@ -1,4 +1,6 @@
 let remainingTime = 0
+let timerDisplay = document.getElementById('timerDisplay');
+timerDisplay.textContent = "00"+ ':' + "01";
 
 function remaining_Time() {
     chrome.storage.local.get(["startTime", "duration"], function(data) {
@@ -12,8 +14,8 @@ function remaining_Time() {
 function updateTimerDisplay() {
     let minutes = Math.floor(remainingTime / 60);
     let seconds = remainingTime % 60;
-    let timerDisplay = document.getElementById('timerDisplay');
     timerDisplay.textContent = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
 }
 
-setInterval(remaining_Time, 1000);
+// We need to tell the program to stop at some time.
+setInterval(remaining_Time, 5000);

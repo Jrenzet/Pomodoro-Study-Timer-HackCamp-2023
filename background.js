@@ -1,10 +1,13 @@
 
+
 document.getElementById('startButton').addEventListener('click', function() { //triggers background.js script when "Start Countdown" button is clicked
     console.log("start timer button pressed"); 
+    startTimer()
 })
 
-function startTimer(duration) {
+function startTimer() {
     const startTime = Date.now();
+    let duration = 10
     chrome.storage.local.set({ startTime, duration });
 }
 
