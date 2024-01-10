@@ -1,12 +1,17 @@
+
+document.getElementById('startButton').addEventListener('click', function() { //triggers background.js script when "Start Countdown" button is clicked
+    console.log("start timer button pressed"); 
+})
+
 function startTimer(duration) {
     const startTime = Date.now();
     chrome.storage.local.set({ startTime, duration });
 }
 
-chrome.alarms.create({ periodInMinutes: 1/60 }); // Check every second
+chrome.alarms.create({periodInMinutes: 0.5}); // Check every 30 seconds
 
 chrome.alarms.onAlarm.addListener(() => {
-    // Check if the timer should still be running and update storage if necessary
+        console.log("Alarm triggered!");
 });
 
 
