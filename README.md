@@ -1,14 +1,25 @@
 # HackCamp
 Hack Camp 2023 Code
-Extension:
-    make a joson file that runs in chrom (empty)
+
+URL blocker with a Pomodoro timer.
+
+Manifest: 
+
+
+Popup page:
+    make some front end effects to make the page look good.
+
+popup.js:
+    When called, update how much time is left by calculating:
+        end time - current time
 
 Blocker:
-    URL Blocker that blocks one url
+    URL Blocker that blocks all urls
+    make some front end effects to make the page look good.
 
-Timer:
-    Prodomo that runs 15s and breaks 10s
-        Logic part: clock.js monitors the time, and return a string of time "HH:MM:SS" (for the UI rendering)  and a state "0", "1"
+Background:
+    1. set end time using chrome api: store the end time using chrome.storage.local.set
+    2. Sustain background.js: chrome alarm api call this script after each 30s.
+    3.If <condition when timer is up>, then
+        send a notification the timer is done.
 
-
-Timer will pass a variable to the blocker, letting it stop/start the block
