@@ -1,3 +1,10 @@
+import * as background from './background.js';
+
+document.getElementById('startButton').addEventListener('click', function() { //triggers background.js script when "Start Countdown" button is clicked
+    console.log("start timer button pressed"); 
+    background.startTimer();
+})
+
 let remainingTime = 0
 let timerDisplay = document.getElementById('timerDisplay');
 timerDisplay.textContent = "00"+ ':' + "01";
