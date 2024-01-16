@@ -11,10 +11,12 @@ function startTimer() {
     chrome.storage.local.set({ startTime, duration });
 }
 
-chrome.alarms.create({periodInMinutes: 0.5}); // Check every 30 seconds
+chrome.alarms.create({periodInMinutes: 0.1}); // set this to trigger every 30 seconds
 
+// sustain the script by waking every 30s.
 chrome.alarms.onAlarm.addListener(() => {
         console.log("Alarm triggered!");
+        chrome.alarms.create({periodInMinutes: 0.1}); // set this to trigger every 30 seconds
 });
 
 
