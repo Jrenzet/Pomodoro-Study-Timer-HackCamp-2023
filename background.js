@@ -1,10 +1,11 @@
-
+// on click start timer, use storage api to store the start time, duration and state of the alarm
+// state = "Standby" "focus" "focusDone" "break"
 
 
 
 export function startTimer() {
     const startTime = Date.now();
-    let duration = 10;
+    let duration = 10000;
     chrome.storage.local.set({ startTime, duration });
     console.log("background script triggered");
 }
