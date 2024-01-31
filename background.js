@@ -3,11 +3,12 @@
 
 
 
-export function startTimer() {
-    const startTime = Date.now();
-    let duration = 10000;
-    chrome.storage.local.set({ startTime, duration });
+export function startTimer(duration) {
     console.log("background script triggered");
+    const startTime = Date.now();
+    chrome.storage.local.set({ startTime, duration }, () => {
+        console.log("Timer state saved");
+    });
 }
 
 chrome.alarms.create({periodInMinutes: 0.1}); // set this to trigger every 30 seconds
