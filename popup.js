@@ -15,6 +15,9 @@ document.getElementById('startButton').addEventListener('click', function () {
 })
 
 //EFFECTS: event listener for resetButton (place holder)
+//BUG: when you reset, close popup, then reopen, NaN:NaN comes up
+//  this is because the interval is still running but does not have a saved time to pass
+//  time being passed is type NaN after memory is cleared, this can be seen in the console log in repeatedUpdate
 document.getElementById('resetButton').addEventListener('click', function () {
     console.log("RESETRESET");
     background.clearTime();
@@ -26,6 +29,7 @@ document.getElementById('resetButton').addEventListener('click', function () {
 //EFFECTS: calculates remaining time, then formats it to a string with minutes and seconds, then updates the timerDisplay
 function repeatedUpdate() {
     calculateRemainingTime().then(remainingTime => {
+        console.log("REMAINING TIME TYPE", isNaN(remainingTime));
         document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
     });
 }
@@ -40,7 +44,7 @@ function calculateRemainingTime() {
             console.log("now is:" + now);
             remainingTime = Math.max(0, data.startTime + data.duration - now);
             console.log(remainingTime);
-            resolve (remainingTime);
+            resolve(remainingTime);
         });
     });
 }
