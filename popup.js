@@ -1,7 +1,8 @@
 import * as background from './background.js';
 
 let initialTime = 1500000;
-let intervalID = null;
+let intervalID = setInterval(repeatedUpdate, 1000);
+
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
 document.getElementById('startButton').addEventListener('click', function () {
@@ -20,9 +21,6 @@ document.getElementById('resetButton').addEventListener('click', function () {
     clearInterval(intervalID);
     document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
 })
-
-//Run repeatedUpdate every 1 second
-
 
 
 //EFFECTS: calculates remaining time, then formats it to a string with minutes and seconds, then updates the timerDisplay
