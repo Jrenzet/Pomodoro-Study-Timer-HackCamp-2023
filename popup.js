@@ -1,21 +1,27 @@
 import * as background from './background.js';
 
 let initialTime = 1500000;
+let intervalID = null;
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
 document.getElementById('startButton').addEventListener('click', function () {
     console.log("start timer button pressed");
+    if (intervalID !== null) {
+        clearInterval(intervalID);
+    }
     background.startTimer(initialTime);
+    intervalID = setInterval(repeatedUpdate, 1000);
 })
 
 //EFFECTS: event listener for resetButton (place holder)
 document.getElementById('resetButton').addEventListener('click', function () {
     console.log("RESETRESET");
     background.clearTime();
+    clearInterval(intervalID);
+    document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
 })
 
 //Run repeatedUpdate every 1 second
-setInterval(repeatedUpdate, 1000);
 
 
 
