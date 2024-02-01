@@ -11,13 +11,18 @@ export function startTimer(duration) {
     });
 }
 
+//EFFECTS: Clear saved time
+export function clearTime() {
+    chrome.storage.local.clear();
+}
+
 //Initial alarm set to fire every 30 seconds
-chrome.alarms.create({periodInMinutes: 0.1}); 
+chrome.alarms.create({ periodInMinutes: 0.1 });
 
 //Alarm listener to keep service worker active and set a new 30 second alarm
 chrome.alarms.onAlarm.addListener(() => {
-        console.log("Alarm triggered!");
-        chrome.alarms.create({periodInMinutes: 0.1}); // set this to trigger every 30 seconds
+    console.log("Alarm triggered!");
+    chrome.alarms.create({ periodInMinutes: 0.1 }); // set this to trigger every 30 seconds
 });
 
 

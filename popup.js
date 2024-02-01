@@ -8,6 +8,12 @@ document.getElementById('startButton').addEventListener('click', function () {
     background.startTimer(initialTime);
 })
 
+//EFFECTS: event listener for resetButton (place holder)
+document.getElementById('resetButton').addEventListener('click', function () {
+    console.log("RESETRESET");
+    background.clearTime();
+})
+
 //Run repeatedUpdate every 1 second
 setInterval(repeatedUpdate, 1000);
 
