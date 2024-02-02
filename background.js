@@ -44,3 +44,9 @@ chrome.alarms.onAlarm.addListener(() => {
 chrome.alarms.onAlarm.addListener(() => {
     // Check if the timer has ended and trigger a notification
 });
+
+export function stateSaver(state) {
+    chrome.storage.local.set({ state }, () => {
+        console.log("program state = " + state);
+    });
+}

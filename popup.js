@@ -22,6 +22,13 @@ document.getElementById('resetButton').addEventListener('click', function () {
     clockStoppedStandby();
 })
 
+//EFFECTS: event listener for pauseButton, pauses timer
+document.getElementById('pauseButton').addEventListener('click', function () {
+    console.log("pause button pressed");
+    background.stateSaver("paused");
+})
+
+
 //EFFECTS: calculates remaining time, then formats it to a string with minutes and seconds, then updates the timerDisplay
 function repeatedUpdate() {
     calculateRemainingTime().then(remainingTime => {
