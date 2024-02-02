@@ -1,40 +1,39 @@
 import * as background from './background.js';
 
 let initialTime = 1500000;
-let intervalID = setInterval(standbyScript, 1000);
+let intervalID = setInterval(repeatedUpdate, 1000);
 
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
 document.getElementById('startButton').addEventListener('click', function () {
     console.log("start timer button pressed");
-    if (intervalID !== null) {
-        clearInterval(intervalID);
-    }
     background.startTimer(initialTime);
+    clearInterval(intervalID);
     intervalID = setInterval(repeatedUpdate, 1000);
 })
 
-//EFFECTS: event listener for resetButton (place holder)
-//BUG: when you reset, close popup, then reopen, NaN:NaN comes up
-//  this is because the interval is still running but does not have a saved time to pass
-//  time being passed is type NaN after memory is cleared, this can be seen in the console log in repeatedUpdate
+//EFFECTS: event listener for resetButton, clears time and displays initialTime
 document.getElementById('resetButton').addEventListener('click', function () {
     console.log("RESETRESET");
     background.clearTime();
     clearInterval(intervalID);
-    intervalID = setInterval(standbyScript, 1000);
+    clockStoppedStandby();
 })
-
 
 //EFFECTS: calculates remaining time, then formats it to a string with minutes and seconds, then updates the timerDisplay
 function repeatedUpdate() {
     calculateRemainingTime().then(remainingTime => {
-        console.log("REMAINING TIME TYPE", isNaN(remainingTime));
-        document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
+        if (isNaN(remainingTime)) {
+            clockStoppedStandby();
+            console.log("Remaingin Time is NaN");
+        } else {
+            document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
+        }
     });
 }
 
-function standbyScript() {
+//EFFECTS: displays intialTime repatedly
+function clockStoppedStandby() {
     document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
 }
 
