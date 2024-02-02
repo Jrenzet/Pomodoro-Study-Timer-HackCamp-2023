@@ -8,14 +8,16 @@ let intervalID = setInterval(repeatedUpdate, 1000);
 document.getElementById('startButton').addEventListener('click', function () {
     console.log("start timer button pressed");
     background.startTimer(initialTime);
+    background.createAlarm();
     clearInterval(intervalID);
     intervalID = setInterval(repeatedUpdate, 1000);
 })
 
 //EFFECTS: event listener for resetButton, clears time and displays initialTime
 document.getElementById('resetButton').addEventListener('click', function () {
-    console.log("RESETRESET");
+    console.log("reset button pressed");
     background.clearTime();
+    background.stopAlarm();
     clearInterval(intervalID);
     clockStoppedStandby();
 })
@@ -24,8 +26,9 @@ document.getElementById('resetButton').addEventListener('click', function () {
 function repeatedUpdate() {
     calculateRemainingTime().then(remainingTime => {
         if (isNaN(remainingTime)) {
+            clearInterval(intervalID);
             clockStoppedStandby();
-            console.log("Remaingin Time is NaN");
+            console.log("Remaining Time is NaN");
         } else {
             document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
         }

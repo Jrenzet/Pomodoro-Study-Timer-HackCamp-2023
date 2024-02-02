@@ -16,8 +16,23 @@ export function clearTime() {
     chrome.storage.local.clear();
 }
 
-//Initial alarm set to fire every 30 seconds
-chrome.alarms.create({ periodInMinutes: 0.1 });
+//EFFECTS: create alarm set to fire every 30 seconds
+export function createAlarm() {
+    chrome.alarms.create('backgoundAlarm', { periodInMinutes: 0.1 });
+}
+
+//EFFECTS: stops the running alarm
+//BUG: alarm listnener still hears the last trigger of the alarm before it is cleared, starting the alarm cycle all over again
+export function stopAlarm() {
+    chrome.alarms.clear('backgoundAlarm', function (wasCleared) {
+        if (wasCleared) {
+            console.log("Alarm cleared successfully.");
+        } else {
+            console.log("No alarm by that name was found to clear.");
+        }
+    });
+}
+
 
 //Alarm listener to keep service worker active and set a new 30 second alarm
 chrome.alarms.onAlarm.addListener(() => {
