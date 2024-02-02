@@ -2,13 +2,34 @@
   <head>
     <style>
       #messageBox {
-          display: none;
+        display: none;
       }
-  </style>
+
+      .timer {
+        font-style: italic;
+      }
+
+      .start {
+        background-color: green;
+        color: white;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        cursor: pointer;
+    
+      }
+
+      .reset {
+        background-color: red;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        
+      }
+    </style>
   </head>
   <body>
     <h1>Pomodoro</h1>
-    <div id="timerDisplay">00:00</div>
+    <div id="timerDisplay">Loading...</div>
     <button id="startButton">Start Countdown</button>
     <button id="resetButton">Reset</button>
     <div id="messageBox">Break Time!</div>
