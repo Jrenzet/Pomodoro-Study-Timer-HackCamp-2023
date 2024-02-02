@@ -29,10 +29,11 @@
   </head>
   <body>
     <h1>Pomodoro</h1>
-    <h2 class = "timer" id="timerDisplay">00:00</h2>
-    <button class="start" id="startButton">Start Countdown</button>
-    <button class="reset" id="resetButton">Reset</button>
+    <div id="timerDisplay">Loading...</div>
+    <button id="startButton">Start Countdown</button>
+    <button id="resetButton">Reset</button>
     <div id="messageBox">Break Time!</div>
-    <script src="clock.js"></script>
+    <script type="module" src="background.js"></script> <!--this is the background script--> 
+    <script type="module" src="popup.js"></script> <!--this code updates remaining time-->
   </body>
 </html>
