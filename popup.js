@@ -1,7 +1,7 @@
 import * as background from './background.js';
 
 let initialTime = 1500000;
-let intervalID = setInterval(repeatedUpdate, 1000);
+let intervalID = setInterval(standbyScript, 1000);
 
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
@@ -22,7 +22,7 @@ document.getElementById('resetButton').addEventListener('click', function () {
     console.log("RESETRESET");
     background.clearTime();
     clearInterval(intervalID);
-    document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
+    intervalID = setInterval(standbyScript, 1000);
 })
 
 
@@ -32,6 +32,10 @@ function repeatedUpdate() {
         console.log("REMAINING TIME TYPE", isNaN(remainingTime));
         document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
     });
+}
+
+function standbyScript() {
+    document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
 }
 
 //EFFECTS: Calculates how much time is remaining on the timer
