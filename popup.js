@@ -2,12 +2,17 @@ import * as background from './background.js';
 
 let initialTime = 1500000;
 let intervalID = setInterval(repeatedUpdate, 1000);
+let remainingTime = initialTime;
 
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
 document.getElementById('startButton').addEventListener('click', function () {
     console.log("start timer button pressed");
-    background.startTimer(initialTime);
+    if (remainingTime == initialTime) {
+        background.startTimer(initialTime);
+    } else {
+        background.startTimer(remainingTime);
+    }
     background.createAlarm();
     clearInterval(intervalID);
     intervalID = setInterval(repeatedUpdate, 1000);
@@ -20,12 +25,23 @@ document.getElementById('resetButton').addEventListener('click', function () {
     background.stopAlarm();
     clearInterval(intervalID);
     clockStoppedStandby();
+    remainingTime = initialTime;
 })
 
 //EFFECTS: event listener for pauseButton, pauses timer
 document.getElementById('pauseButton').addEventListener('click', function () {
-    console.log("pause button pressed");
-    background.stateSaver("paused");
+    chrome.storage.local.get(["state"]).then((result) => {
+        if (result.state == "paused") {
+            console.log("Already Paused");
+        } else {
+            console.log("pause now");
+            background.stateSaver("paused");
+            clearInterval(intervalID);
+            document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
+
+        }
+    });
+
 })
 
 
@@ -51,7 +67,6 @@ function clockStoppedStandby() {
 //NOTE: Promise is added to deal with asynchronous nature of storage api
 function calculateRemainingTime() {
     return new Promise((resolve, reject) => {
-        let remainingTime;
         chrome.storage.local.get(["startTime", "duration"], (data) => {
             const now = Date.now();
             console.log("now is:" + now);
@@ -66,7 +81,7 @@ function calculateRemainingTime() {
 //EFFECTS: Converts milliseconds to string, formatted "mm:ss"
 //QUESTION: 1. Why does it only use the 60 second workaround when a new time is set?
 //2. Where is now stored? I can't find it anywhere
-function formatRemainingTime(time) {
+export function formatRemainingTime(time) {
     let displayTime
     let minutes = Math.floor(time / 60000);
     let seconds = Math.round((time - (minutes * 60000)) / 1000);
@@ -79,3 +94,4 @@ function formatRemainingTime(time) {
     }
     return displayTime;
 }
+

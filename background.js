@@ -7,7 +7,7 @@ export function startTimer(duration) {
     console.log("background script triggered");
     const startTime = Date.now();
     chrome.storage.local.set({ startTime, duration }, () => {
-        console.log("Timer state saved");
+        console.log("Timer state saved"+ duration);
     });
 }
 
