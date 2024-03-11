@@ -1,26 +1,33 @@
 import * as background from './background.js';
 
-let initialTime = 1500000;
+let initialTime = 10000//1500000;
 let intervalID = setInterval(repeatedUpdate, 1000);
 let remainingTime = initialTime;
 
 
 //EFFECTS: event listener triggering the startTimer function in background.js when startButton is clicked
 document.getElementById('startButton').addEventListener('click', function () {
-    console.log("start timer button pressed");
-    if (remainingTime == initialTime) {
-        background.startTimer(initialTime);
-    } else {
-        background.startTimer(remainingTime);
-    }
-    background.createAlarm();
-    clearInterval(intervalID);
-    intervalID = setInterval(repeatedUpdate, 1000);
+    chrome.storage.local.get(["state"]).then((result) => {
+        console.log("start timer button pressed");
+        background.blockingSaver(true);
+        if (remainingTime == initialTime || isNaN(remainingTime)) {
+            background.startTimer(initialTime);
+        } else {
+            background.startTimer(remainingTime);
+        }
+        if (result.state == "paused") {
+            background.stateSaver("running");
+        }
+        background.createAlarm();
+        clearInterval(intervalID);
+        intervalID = setInterval(repeatedUpdate, 1000);
+    });
 })
 
 //EFFECTS: event listener for resetButton, clears time and displays initialTime
 document.getElementById('resetButton').addEventListener('click', function () {
     console.log("reset button pressed");
+    background.blockingSaver(false);
     background.clearTime();
     background.stopAlarm();
     clearInterval(intervalID);
@@ -29,38 +36,59 @@ document.getElementById('resetButton').addEventListener('click', function () {
 })
 
 //EFFECTS: event listener for pauseButton, pauses timer
-document.getElementById('pauseButton').addEventListener('click', function () {
+//TODO: Uncomment when bug descirbed in clockPaused() fucntion is fixed
+/*document.getElementById('pauseButton').addEventListener('click', function () {
     chrome.storage.local.get(["state"]).then((result) => {
         if (result.state == "paused") {
             console.log("Already Paused");
         } else {
             console.log("pause now");
             background.stateSaver("paused");
-            clearInterval(intervalID);
+            //clearInterval(intervalID);
             document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
 
         }
     });
-
-})
+})*/
 
 
 //EFFECTS: calculates remaining time, then formats it to a string with minutes and seconds, then updates the timerDisplay
 function repeatedUpdate() {
     calculateRemainingTime().then(remainingTime => {
-        if (isNaN(remainingTime)) {
-            clearInterval(intervalID);
-            clockStoppedStandby();
-            console.log("Remaining Time is NaN");
-        } else {
-            document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
-        }
+        chrome.storage.local.get(["state"]).then((result) => {
+            if (remainingTime <= 0) {
+                background.blockingSaver(false);
+                clearInterval(intervalID);
+                timerFinished();
+            } else if (isNaN(remainingTime)) {
+                clearInterval(intervalID);
+                clockStoppedStandby();
+                console.log("Remaining Time is NaN");
+            } else if (result.state == "paused") {
+                clearInterval(intervalID);
+                clockPaused();
+                console.log("Start pause loop");
+            } else {
+                document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
+            }
+        });
     });
 }
 
 //EFFECTS: displays intialTime repatedly
 function clockStoppedStandby() {
     document.getElementById("timerDisplay").textContent = formatRemainingTime(initialTime);
+}
+
+function timerFinished() {
+    document.getElementById("timerDisplay").textContent = "Break Time!";
+}
+
+//EFFECTS: displays paused time repeatedly
+//TODO: Bug when clock paused, if popup close and reopened, paused time calculated is relative tot he stored time, not the timee program was paused
+//pause button removed from program until this is fixed
+function clockPaused() {
+    document.getElementById("timerDisplay").textContent = formatRemainingTime(remainingTime);
 }
 
 //EFFECTS: Calculates how much time is remaining on the timer
@@ -94,4 +122,5 @@ export function formatRemainingTime(time) {
     }
     return displayTime;
 }
+
 

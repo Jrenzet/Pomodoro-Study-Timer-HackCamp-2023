@@ -50,3 +50,9 @@ export function stateSaver(state) {
         console.log("program state = " + state);
     });
 }
+
+export function blockingSaver(block) {
+    chrome.storage.local.set({ block }, () => {
+        console.log("blocking sites? " + block);
+    });
+}
