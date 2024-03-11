@@ -7,7 +7,7 @@ export function startTimer(duration) {
     console.log("background script triggered");
     const startTime = Date.now();
     chrome.storage.local.set({ startTime, duration }, () => {
-        console.log("Timer state saved");
+        console.log("Timer state saved"+ duration);
     });
 }
 
@@ -44,3 +44,15 @@ chrome.alarms.onAlarm.addListener(() => {
 chrome.alarms.onAlarm.addListener(() => {
     // Check if the timer has ended and trigger a notification
 });
+
+export function stateSaver(state) {
+    chrome.storage.local.set({ state }, () => {
+        console.log("program state = " + state);
+    });
+}
+
+export function blockingSaver(block) {
+    chrome.storage.local.set({ block }, () => {
+        console.log("blocking sites? " + block);
+    });
+}

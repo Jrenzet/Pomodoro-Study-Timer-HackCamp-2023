@@ -1,25 +1,8 @@
-# HackCamp
-Hack Camp 2023 Code
+# Pomodoro Study Timer
+Project started in Hack Camp 2023 hackathon at UBC
 
-URL blocker with a Pomodoro timer.
+Chrome Extension to block distracting websites for 25 minutes of hard study time, alerts user when 25 minutes is up and sites are unblocked.
 
-Manifest: 
+In this current verison distracting websites are hardcoded. These websites are Facebook, X (formerly Twitter), Instagram, and YouTube.
 
-
-Popup page:
-    make some front end effects to make the page look good.
-
-popup.js:
-    When called, update how much time is left by calculating:
-        end time - current time
-
-Blocker:
-    URL Blocker that blocks all urls
-    make some front end effects to make the page look good.
-
-Background:
-    1. set end time using chrome api: store the end time using chrome.storage.local.set
-    2. Sustain background.js: chrome alarm api call this script after each 30s.
-    3.If <condition when timer is up>, then
-        send a notification the timer is done.
 

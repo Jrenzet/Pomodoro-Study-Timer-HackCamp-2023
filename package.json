@@ -1,0 +1,23 @@
+{
+  "name": "pomodorotimer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Pomodoro timer Chrome extension started in HackCamp 2023",
+  "main": "content.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha './test/**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jrenzet/HackCamp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jrenzet/HackCamp/issues"
+  },
+  "homepage": "https://github.com/Jrenzet/HackCamp#readme"
+}
