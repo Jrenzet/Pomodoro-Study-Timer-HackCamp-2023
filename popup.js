@@ -1,6 +1,6 @@
 import * as background from './background.js';
 
-let initialTime = 10000//1500000;
+let initialTime = 1500000;
 let intervalID = setInterval(repeatedUpdate, 1000);
 let remainingTime = initialTime;
 
@@ -82,6 +82,7 @@ function clockStoppedStandby() {
 
 function timerFinished() {
     document.getElementById("timerDisplay").textContent = "Break Time!";
+    alert("25 minutes is up, its break time!");
 }
 
 //EFFECTS: displays paused time repeatedly
